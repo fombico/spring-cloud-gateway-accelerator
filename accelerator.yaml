@@ -1,0 +1,19 @@
+accelerator:
+  displayName: spring-cloud-gateway-accelerator
+  description: Generate yaml for a Spring Cloud Gateway instance
+  iconUrl: https://raw.githubusercontent.com/simple-starters/icons/master/icon-tanzu-light.png
+  tags:
+  - tanzu
+  - spring
+  - cloud
+  - gateway
+  - api
+  options:
+  - name: optionName
+    label: Nice Label
+    display: true
+    defaultValue: ""
+engine:
+  include:
+  - '**'
+  exclude: [ "README.md", ".gitignore" ]
