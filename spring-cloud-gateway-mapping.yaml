@@ -1,0 +1,11 @@
+#@ load("@ytt:data", "data")
+---
+apiVersion: "tanzu.vmware.com/v1"
+kind: SpringCloudGatewayMapping
+metadata:
+  name: #@ "{}-mapping".format(data.values.artifactId)
+spec:
+  gatewayRef:
+    name: #@ data.values.artifactId
+  routeConfigRef:
+    name: #@ "{}-routes".format(data.values.artifactId)

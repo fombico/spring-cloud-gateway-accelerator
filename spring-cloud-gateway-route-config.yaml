@@ -1,0 +1,13 @@
+#@ load("@ytt:data", "data")
+---
+apiVersion: "tanzu.vmware.com/v1"
+kind: SpringCloudGatewayRouteConfig
+metadata:
+  name: #@ "{}-routes".format(data.values.artifactId)
+spec:
+  routes:
+    - uri: https://github.com
+      predicates:
+        - Path=/test/**
+      filters:
+        - StripPrefix=1

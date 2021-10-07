@@ -1,7 +1,7 @@
 accelerator:
-  displayName: spring-cloud-gateway-accelerator
+  displayName: Spring Cloud Gateway
   description: Generate yaml for a Spring Cloud Gateway instance
-  iconUrl: https://raw.githubusercontent.com/simple-starters/icons/master/icon-tanzu-light.png
+  iconUrl: https://raw.githubusercontent.com/fombico/spring-cloud-gateway-accelerator/main/icon.svg
   tags:
   - tanzu
   - spring
@@ -9,11 +9,39 @@ accelerator:
   - gateway
   - api
   options:
-  - name: optionName
-    label: Nice Label
+  - name: prometheusMetricsEnabled
+    label: Prometheus metrics
+    description: If Prometheus should be enabled for metrics
+    inputType: toggle
     display: true
-    defaultValue: ""
+    dataType: boolean
+    defaultValue: false
+  - name: prometheusMetricsType
+    dependsOn:
+      name: prometheusMetricsEnabled
+    label: Promtheus metrics type
+    description: Whether to create a ServiceMonitor or use Annotations
+    inputType: radio
+    defaultValue: PrometheusServiceMonitor
+    choices:
+      - text: ServiceMonitor
+        value: PrometheusServiceMonitor
+      - text: Annotations
+        value: PrometheusAnnotations
+  - name: customExtensions
+    label: Custom Extensions
+    description: Custom extensions to include
+    display: true
+    dataType: [ string ]
+    inputType: checkbox
+    defaultValue: []
+    choices:
+      - text: Custom Header
+        value: custom-header
+      - text: Logging Extension
+        value: logging-extension
 engine:
-  include:
-  - '**'
-  exclude: [ "README.md", ".gitignore" ]
+  include: [ "**/*.yaml", "**/*.yml" ]
+  exclude: [ "accelerator.yaml", "k8s-resource.yaml" ]
+  chain:
+    - type: YTT

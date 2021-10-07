@@ -1,0 +1,27 @@
+#@ load("@ytt:data", "data")
+---
+apiVersion: "tanzu.vmware.com/v1"
+kind: SpringCloudGateway
+metadata:
+  name: #@ data.values.artifactId
+spec:
+  count: 1
+  #@ if data.values.prometheusMetricsEnabled:
+  observability:
+    metrics:
+      prometheus:
+        enabled: true
+        #@ if data.values.prometheusMetricsType == "PrometheusServiceMonitor":
+        serviceMonitor:
+          enabled: true
+          labels:
+            release: prometheus
+        #@ else:
+        annotations:
+          enabled: true
+        #@ end
+  #@ end
+  #@ if len(data.values.customExtensions) > 0:
+  extensions:
+    custom: #@ data.values.customExtensions
+  #@ end
